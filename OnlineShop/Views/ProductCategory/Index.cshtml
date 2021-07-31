@@ -1,0 +1,125 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Product categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<a href="@Url.Action("New", "ProductCategory")" class="openDialog-Add" title="Add new product">
+    <img src="/images/plus_add_green.jpg" width="40" height="40">
+</a>
+
+<input class="form-control mr-sm-2" id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">
+<table class="table table-hover" id="myTable">
+    <thead>
+        <tr>
+
+            <th scope="col">Name</th>
+            @*<th>Add to cart</th>*@
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.ProductCategories)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "ProductCategory", new { id = item.Id })" class="openDialog-Edit" title="Edit category product"><img width="40" height="40" src="/images/edit-image.jpg"></a>
+                    <a href="@Url.Action("GetDetails", "ProductCategory", new { id = item.Id })" class="openDialog-Detail" title="Get details for selected product category"><img width="40" height="40" src="/images/info-image.jpg"></a>
+                    <a href="@Url.Action("Delete", "ProductCategory", new { id = item.Id })" class="openDialog-Delete" title="Delete selected category product"><img width="40" height="40" src="/images/delete-image.jpg"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section Scripts {
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/OnlineShopScripts/modals.js"></script>
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+
+<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForEdit">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForAdd">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deletemodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForDelete">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForDetail">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@using (Html.BeginForm("Index", "ProductCategory", FormMethod.Post))
+    {
+        <h3>Filters</h3>
+        for (int i = 0; i < Model.Filters.Count(); i++)
+        {
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.Filters[i].Selected, new { onclick = "this.form.submit();" })
+                    @Html.DisplayFor(m => m.Filters[i].Text)
+                    @Html.HiddenFor(m => m.Filters[i].Value)
+                    @Html.HiddenFor(m => m.Filters[i].Text)
+                </label>
+            </div>
+        }
+    }*@
+@*<br />*@
+
+
+

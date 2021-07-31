@@ -1,0 +1,155 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="@Url.Action("New", "Product")" class="openDialog-Add" title="Add new product">
+    <img src="/images/plus_add_green.jpg"
+         width="40" height="40">
+</a>
+<br />
+
+
+
+<input class="form-control mr-sm-2" id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">
+
+<table class="table table-striped table-bordered table-sm" cellspacing="0" id="myTable">
+
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            @*<th scope="col">Quantity</th>*@
+            <th scope="col">Unit</th>
+            @*<th scope="col">Category</th>*@
+            <th scope="col">Image</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @*user table*@
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Ammount)
+                        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitOfMeasurement)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ProductCategory.Name)
+                    </td>*@
+                <td>
+                    @if (item.Image != null)
+                    {
+                        <img src="@Url.Action("RenderPhoto", "Product", new { productId = item.Id })" width="100" height="100" />
+                    }
+                <td>
+                    <a href="@Url.Action("Cart", "Product", new { id = item.Id })" class="openDialog-Cart" title="Add to cart"><img width="40" height="40" src="/images/cart_image.jpg"></a>
+                </td>
+                @*<td>
+                        <a href="@Url.Action("Edit", "Product", new { id = item.Id })" class="openDialog-Edit" title="Edit category product"><img width="40" height="40" src="/images/edit-image.jpg"></a>
+                        <a href="@Url.Action("GetDetails", "Product", new { id = item.Id })" class="openDialog-Detail" title="Get details for selected product category"><img width="40" height="40" src="/images/info-image.jpg"></a>
+                        <a href="@Url.Action("Delete", "Product", new { id = item.Id })" class="openDialog-Delete" title="Delete selected category product"><img width="40" height="40" src="/images/delete-image.jpg"></a>
+                    </td>*@
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+@*admin table*@
+
+@section Scripts {
+    <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" />
+        <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+        <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/OnlineShopScripts/modals.js"></script>
+    <script>
+
+        $(function () {
+            $(document).ready(function () {
+                $('#myTable').DataTable()
+            });
+        });
+    </script>
+
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+<div class="modal fade" id="editmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForEdit">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForAdd">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deletemodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForDelete">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForDetail">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cartmodel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="divForCart">
+            </div>
+        </div>
+    </div>
+</div>
+

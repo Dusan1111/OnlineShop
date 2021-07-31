@@ -1,0 +1,25 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+  
+}
+@using (Html.BeginForm("Delete", "Product"))
+{
+    <div class="form-horizontal">
+        <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+            <h5 class="modal-title" style="color:white">Are you sure you want to delete seleted product?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <h2>Product: @Model.Product.Name</h2>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ProductCategory.Id)
+    @Html.AntiForgeryToken()
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

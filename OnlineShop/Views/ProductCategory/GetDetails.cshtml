@@ -1,0 +1,18 @@
+﻿    @model OnlineShop.ViewModels.ProductViewModel
+    @{
+        ViewBag.Title = "Product category details";
+    }
+    <div class="form-horizontal">
+        <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+            <h5 class="modal-title" style="color:white">Product category</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <h2>Product category name: @Model.ProductCategory.Name</h2>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-success" data-dismiss="modal" aria-hidden="true">Ok</button>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

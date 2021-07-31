@@ -1,0 +1,37 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm("Save", "ProductCategory"))
+{
+    <div class="form-horizontal">
+        <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+            <h5 class="modal-title" style="color:white">Product category</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        @Html.ValidationSummary(true, "Please fix the following errors")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductCategory.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProductCategory.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductCategory.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-primary">Save</button>
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ProductCategory.Id)
+    @Html.AntiForgeryToken()
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

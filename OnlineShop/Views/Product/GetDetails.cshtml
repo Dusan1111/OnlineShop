@@ -1,0 +1,35 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Product details";
+
+}
+<div class="form-horizontal">
+    <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+        <h5 class="modal-title" style="color:white">Product details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            Product
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+        <dt>
+            Price
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Price)
+        </dd>
+
+    </dl>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal" aria-hidden="true">Ok</button>
+    </div>
+</div>
+
+

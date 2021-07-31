@@ -1,0 +1,63 @@
+﻿
+@model OnlineShop.ViewModels.ProductViewModel
+@{
+}
+<style type="text/css">
+
+    #topRightCornerDiv {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    @Html.Partial("_LoginPartial")
+</nav>
+
+@*<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Online Shop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>*@
+
+    <div id="topRightCornerDiv">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                @Html.ActionLink("My Cart"+"("+ @Model.CartProductsCount + ")", "GetCartItems", "Product", new { @class = "btn btn-warning glyphicon glyphicon-plus-sign" })
+                <a class="nav-link" >
+                  
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            @*<li class="nav-item">
+                    <a class="nav-link" href="/Customers/Index"> Customers </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Movies/Index"> Movies </a>
+                </li>*@
+            @*<li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>*@
+            @*<li class="" nav-item"">
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+            </li>*@
+
+        </ul>
+
+
+    </div>
+@*</nav>*@
+

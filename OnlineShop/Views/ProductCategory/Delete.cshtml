@@ -1,0 +1,24 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Product category details";
+}
+@using (Html.BeginForm("Delete", "ProductCategory"))
+{
+    <div class="form-horizontal">
+        <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+            <h5 class="modal-title" style="color:white">Product category</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <h2>Product category name: @Model.ProductCategory.Name</h2>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ProductCategory.Id)
+    @Html.AntiForgeryToken()
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,165 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+
+    #bottomRightCornerDiv {
+        float: right
+    }
+
+    #element1 {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    #element2 {
+        display: inline-block;
+        vertical-align: top;
+    }
+    #cartMenu {
+        list-style-type: none;
+        margin-top: 0px;
+        margin-bottom: 100px;
+        margin-right: 150px;
+        margin-left: 80px;
+        width: 100%;
+        border: 3px solid green;
+        padding: 10px;
+    }
+</style>
+<a href="@Url.Action("Index", "Product")" class="elements"><span>Contiune shopping</span></a>
+<br />
+
+@*<input class="form-control mr-sm-2" id="myInput" type="text" onkeyup="myFunction()" placeholder="Search">*@
+    <div id="element1">
+        @using (Html.BeginForm("GetCartItems", "Product", FormMethod.Post))
+        {
+            <table class="table table-hover" id="cartTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        @*<th scope="col">Unit</th>*@
+                        <th scope="col">Total</th>
+
+                        @*<th scope="col">Quantity</th>*@
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @*user table*@
+                    @foreach (var item in Model.CartProducts)
+                    {
+                        @Html.HiddenFor(model => Model.CartProductsCount, new { @id = "cartProductsCount" })
+
+                        <tr>
+                            <td>
+                                @if (item.Image != null)
+                                {
+                                    <img src="@Url.Action("RenderPhoto", "Product", new { productId = item.Id })" width="50" height="50" />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.EditorFor(model => item.Ammount,
+                               new { htmlAttributes = new { @type = "number", @class = "form-control", @style = "width:100px;", @min = "1", @max = "100", @value = item.Ammount, @onclick= "updateQuantity(this)", @id="ammount" } })
+                            </td>
+                            @*<td>
+                                    @Html.EditorFor(model => item.Ammount,
+                                   new { htmlAttributes = new { @type = "number", @class = "form-control", @style = "width:100px;", @min = "1", @max = "100", @value = item.Ammount, @onclick = "this.form.submit();" } })
+                                </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalProductPrice)
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("RemoveFromCart", "Product", new { id = item.Id })" class="openDialog-RemoveFromCart" title="Remove product from cart">
+                                    <img width="25" height="25" src="/images/delete-image.jpg">
+                                    Remove
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div id="element2">
+        <div id="cartDiv">
+            <ul id="cartMenu">
+                <li>
+                    <div>
+                        <h4>Total: <b id="totalCartPrice">@Html.DisplayFor(modelItem => Model.TotalCartPrice)</b></h4>
+                    </div>
+                </li>
+                <li>
+                    <p>Please select delivery:</p>
+                    <input type="radio" id="age2" name="age" value="60">
+                    <label for="age2">Delivery</label><br>
+                    <input type="radio" id="age3" name="age" value="100">
+                    <label for="age3">Personal pickup</label><br><br>
+                    @*<label><input type="checkbox" name="checkbox" value="value">Delivery</label>*@
+                </li>
+             
+             
+             
+                <li>
+                    <button type="button" class="btn btn-success btn-lg btn-block">Finish shopping</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    @section Scripts {
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/OnlineShopScripts/modals.js"></script>
+        <script>
+            function getRowIndex(el) {
+                while ((el = el.parentNode) && el.nodeName.toLowerCase() !== 'tr');
+
+                if (el)
+                    return el.rowIndex;
+            }
+        </script>
+
+        <script>
+            function updateQuantity(row) {
+                var index = getRowIndex(row);
+                var table = document.getElementById('cartTable');
+                var price = table.rows[index].cells[2].innerHTML;
+                var quantity = row.value;
+
+                table.rows[index].cells[4].innerHTML = Number(quantity) * Number(price);
+                var totalCartPrice = 0;
+                var cartProductsCount = 0;
+                for (var i = 1, row; row = table.rows[i]; i++) {
+                    var a = Number(table.rows[i].cells[4].innerHTML);
+                    totalCartPrice += a;
+                    cartProductsCount++;
+                }
+                document.getElementById("totalCartPrice").innerHTML = totalCartPrice;
+
+                document.getElementById("cartProductsCount").innerHTML = cartProductsCount;
+            }
+        </script>
+
+    }
+
+    <div class="modal fade" id="removeFromCartModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="divForRemoveFromCart">
+                </div>
+            </div>
+        </div>
+    </div>

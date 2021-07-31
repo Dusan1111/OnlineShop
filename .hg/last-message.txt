@@ -1,0 +1,1 @@
+Add to cart functionality, remove from cart view

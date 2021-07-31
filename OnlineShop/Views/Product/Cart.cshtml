@@ -1,0 +1,139 @@
+﻿@model OnlineShop.ViewModels.ProductViewModel
+@{
+
+}
+<style type="text/css">
+    #element1 {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    #element2 {
+        display: inline-block;
+        vertical-align: top;
+    }
+    /*By DjelalEddine@gmail.com*/
+    #user .avatar {
+        width: 60px;
+    }
+
+        #user .avatar > img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10%;
+        }
+    /*Card*/
+    #user .panel-thumb {
+        margin: 5px auto;
+        text-align: center;
+    }
+
+        #user .panel-thumb .avatar-card {
+            text-align: center;
+            height: 200px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+            #user .panel-thumb .avatar-card > img {
+                max-width: 200px;
+                max-height: 200px;
+            }
+
+    /* table*/
+    #user .panel-table {
+        animation-duration: 3s;
+    }
+
+        #user .panel-table .panel-body .table {
+            margin: 0px;
+        }
+
+        #user .panel-table .panel-body {
+            padding: 0px;
+        }
+
+            #user .panel-table .panel-body .table-bordered > thead > tr > th {
+                text-align: center;
+            }
+
+        #user .panel-table .panel-footer {
+            height: 60px;
+            padding: 0px;
+        }
+</style>
+@using (Html.BeginForm("Cart", "Product", FormMethod.Post))
+{
+<div class="form-horizontal">
+
+    @Html.AntiForgeryToken()
+
+    <div class="modal-header" id="myModalLabel" style="background:steelblue;text-align:center">
+        <h5 class="modal-title" style="color:white">Add to cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Product.Id)
+    @Html.HiddenFor(model => model.Product.Name)
+    @Html.HiddenFor(model => model.Product.Price)
+
+    @Html.HiddenFor(model => model.Product.UnitOfMeasurement)
+    @Html.HiddenFor(model => model.Product.Description)
+    <div class="modal-body">
+        <form>
+            <div id="element1">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <img src="@Url.Action("RenderPhoto", "Product", new { productId = @Model.Product.Id })" width="150" height="150" />
+                        @Html.HiddenFor(model => model.Product.Image)
+                    </div>
+                </div>
+            </div>
+            <div id="element2">
+                <table>
+                    <tr>
+                        <td nowrap="nowrap">
+                            @Html.LabelFor(model => model.Product.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Product.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-4" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(model => model.Product.Ammount, htmlAttributes: new { @class = "control-label col-md-4" })
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.Product.Ammount, new { htmlAttributes = new { @type = "number", @class = "form-control", @style = "width:100px;", @min = "1", @max = "100", @placeholder = "1" } })
+                            @Html.HiddenFor(model => model.Product.Ammount)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-success">Add to cart</button>
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+
+</div>
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+}
+
+
